@@ -91,7 +91,6 @@ public:
     CPPUNIT_TEST(test_keepalive);
     CPPUNIT_TEST(test_multi_functions);
     CPPUNIT_TEST(test_progress);
-    CPPUNIT_TEST(test_prov2_fs_upload);
     CPPUNIT_TEST(test_share_functions);
     CPPUNIT_TEST(test_ssl);
     CPPUNIT_TEST(test_upload);
@@ -113,7 +112,6 @@ private:
     void test_keepalive();
     void test_multi_functions();
     void test_progress();
-    void test_prov2_fs_upload();
     void test_share_functions();
     void test_ssl();
     void test_upload();

@@ -170,12 +170,6 @@ int CCurlTester::progress_callback(void *clientp,
     return 0;
 }
 
-// size_t CCurlTester::read_data_callback(void *ptr, size_t size, size_t nmemb, void *request)
-// {
-//     return 0;
-// }
-
-
 void CCurlTester::setUp()
 {
     m_dwTotalLongth = 0;
@@ -312,7 +306,6 @@ CURLcode CCurlTester::_setupEasyHandle(CURL* pCurlEasy, PCURL_WORK_PARAM pCurlWo
         pCurlWorkParam->clearInfo = hReadFile;
 
         //指定 PUT 操作. TODO: 现在很多上传实际都是 POST(而且还要带各种 meta 信息, 如文件名, 大小等)
-        //  但可以用于 nubes 等带文件名的直接上传测试
         CURL_VERIFY(curl_easy_setopt(pCurlEasy, CURLOPT_UPLOAD, 1L));  //TODO:示例(fileupload.c) 中 url 是 file://xxx
         CURL_VERIFY(curl_easy_setopt(pCurlEasy, CURLOPT_READFUNCTION, CCurlTester::read_from_file_handle));
         CURL_VERIFY(curl_easy_setopt(pCurlEasy, CURLOPT_READDATA, hReadFile));
@@ -478,7 +471,8 @@ void CCurlTester::test_curlVersion()
             convVerInfo.UTF8_TO_TCHAR(pVerInfoData->version),
             convHost.UTF8_TO_TCHAR(pVerInfoData->host),
             convSSLVersion.UTF8_TO_TCHAR(pVerInfoData->ssl_version),
-            pVerInfoData->features, FTL::CFCurlUtils::GetFeaturesInfo(fmtFeatures, pVerInfoData->features));
+            pVerInfoData->features, FTL::CFCurlUtils::
+        (fmtFeatures, pVerInfoData->features));
     }
 }
 
@@ -607,8 +601,7 @@ void CCurlTester::test_high_performance()
 
         CURL_VERIFY(curl_easy_setopt(pCurlEasy, CURLOPT_WRITEFUNCTION, write_to_file_handle));  //OnWriteData
 
-
-                                                                                                /* enable TCP keep-alive for this transfer */
+       /* enable TCP keep-alive for this transfer */
 
         CURL_VERIFY(curl_easy_setopt(pCurlEasy, CURLOPT_TCP_KEEPALIVE, 1L));
 
